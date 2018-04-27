@@ -1,0 +1,18 @@
+//remove .template extension of this file.
+
+var config = {};
+
+config.url             = 'https://localhost';
+config.port            = '8081';
+config.gmailuser       = 'an@email.com';
+config.gmailpassword   = 'apassword';
+config.emailtabletemplate = 
+'<h4>Shopping List</h4>'+
+'<table>'+
+'<tr><th>Product</th><th>Qty</th></tr>'+
+'@@DYNAMICROWS'+
+'</table>';
+
+//@@DYNAMICROWS is a reserved token that is used to create the dynamic (product|quantity) html table rows.
+
+module.exports = config;
