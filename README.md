@@ -2,7 +2,7 @@
 
 To put the WEB API up and running, open up a command line/terminal and type:
 ```
-> CD c:/PATH_TO_PROJECT/Kitchen-Cabinet-Assistant/Server/api-node/
+> CD c:/PATH_TO_PROJECT/Server/api-node/
 > node app.js
 ```
 Use sudo if your on a linux dist.
@@ -10,7 +10,7 @@ Use sudo if your on a linux dist.
 ## Configurations
 
 The following file must be configured:
-* **config.js** under _Kitchen-Cabinet-Assistant/Server/api-node/
+* **config.js** under _Server/api-node/
 Here you will be able to configure properties like,
   * WEB API's url and port;
   * The user credentials of the email account that will send the emails with the shopping lists;
