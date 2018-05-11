@@ -4,6 +4,7 @@ var multer = require('multer');
 var filesystem = require('fs');
 var request = require('request');
 var config = require('./config');
+const sharp = require('sharp');
 
 var app = express();
   app.use(bodyParser.json({limit: '50mb'}));
@@ -131,9 +132,16 @@ app.post('/productsave/:id', upload.array(), function(req, res){
       inProduct.id = lastId+1;
 
       //save image in image folder
-      require("fs").writeFile("AuxiliaryFolder/ProductImages/"+inProduct.imgUrl.filename, inProduct.imgUrl.value, 'base64', function(err) {
+      var imageFileName = inProduct.imgUrl.filename;
+      filesystem.writeFile("AuxiliaryFolder/ProductImages/"+imageFileName, inProduct.imgUrl.value, 'base64', function(err) {
          if (err) console.log(err);
+
+         if (!err)
+         sharp('AuxiliaryFolder/ProductImages/'+imageFileName).resize(286, 286).max().toBuffer(function(err, buffer) {
+           filesystem.writeFileSync('AuxiliaryFolder/ProductImages/'+ imageFileName, buffer);
+         });
       });
+
       //delete inProduct.imgUrl.value
       inProduct.imgUrl.value = '';
       inProduct.imgUrl.filename = 'images/'+ inProduct.imgUrl.filename;
@@ -166,9 +174,16 @@ app.post('/productsave/:id', upload.array(), function(req, res){
 
           if(inProduct.imgUrl.value != ''){
             //save image in image folder
-            require("fs").writeFile("AuxiliaryFolder/ProductImages/" + inProduct.imgUrl.filename, inProduct.imgUrl.value, 'base64', function(err) {
+            var imageFileName = inProduct.imgUrl.filename;
+            filesystem.writeFile("AuxiliaryFolder/ProductImages/" + imageFileName, inProduct.imgUrl.value, 'base64', function(err) {
               if (err) console.log(err);
+
+              if (!err)
+                sharp('AuxiliaryFolder/ProductImages/'+imageFileName).resize(286, 286).max().toBuffer(function(err, buffer) {
+                  filesystem.writeFileSync('AuxiliaryFolder/ProductImages/'+imageFileName, buffer);
+                });
             });
+                     
             //delete inProduct.imgUrl.value
             inProduct.imgUrl.value = '';
             inProduct.imgUrl.filename = 'images/' + inProduct.imgUrl.filename;
